@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   onPressed: () {
-                    if(fromKey.currentState!.validate()){}
+                    if (fromKey.currentState!.validate()) {}
                   },
                   child: Text(
                     'Login',
@@ -93,12 +93,11 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
-      floatingActionButton:  NavigatorTypeAuthWidget(
-          title: "Don’t have an account? ",
-          subTitle: " Register ",
-          onTap: () {
-            Navigator.of(context).pushNamed(RegisterScreen.routeName);
-          })
-      );
+        floatingActionButton: NavigatorTypeAuthWidget(
+            title: "Don’t have an account? ",
+            subTitle: " Register ",
+            onTap: () {
+              Navigator.of(context).pushNamed(RegisterScreen.routeName);
+            }));
   }
 }
