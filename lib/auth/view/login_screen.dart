@@ -31,8 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 Text(
                   'Login',
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 32,
+                    fontWeight: FontWeight.w700,
                     color: Color(0xff24252C),
                   ),
                 ),
@@ -40,8 +40,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 Text(
                   'Email',
                   style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
                     color: Color(0xff24252C),
                   ),
                 ),
@@ -55,8 +55,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 Text(
                   'Password',
                   style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
                     color: Color(0xff24252C),
                   ),
                 ),
