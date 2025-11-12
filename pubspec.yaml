@@ -37,6 +37,10 @@ dependencies:
   cupertino_icons: ^1.0.8
   animate_do: ^4.2.0
   smooth_page_indicator: ^1.2.1
+  firebase_core: ^4.2.1
+
+
+
 
 dev_dependencies:
   flutter_test:
