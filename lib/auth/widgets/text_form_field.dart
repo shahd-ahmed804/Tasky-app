@@ -49,6 +49,7 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
             ? IconButton(
           icon: Icon(
             widget.obscureText ? Icons.visibility_off : Icons.visibility,
+           // widget.obscureText ? Icons.visibility_off : Icons.visibility,
             color: const Color(0xff454A4F),
             size: 24,
           ),

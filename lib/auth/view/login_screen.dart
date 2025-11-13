@@ -1,7 +1,12 @@
+import 'dart:math';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tasky_app/auth/view/register_screen.dart';
 import 'package:tasky_app/auth/widgets/navigator_type_auth.dart';
 import 'package:tasky_app/auth/widgets/text_form_field.dart';
+import 'package:tasky_app/utiles/app_dialog.dart';
 import 'package:tasky_app/utiles/validator.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -76,8 +81,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  onPressed: () {
-                    if (fromKey.currentState!.validate()) {}
+                  onPressed: ()async {
+                    if (fromKey.currentState!.validate()) {
+                      AppDialog.showLoading(context);
+                     await login(email: email.text,
+                       password: password.text).then((_){
+                        Navigator.of(context).pop();
+                        email.clear();
+                        password.clear();
+                     }).catchError((error){
+                       Navigator.of(context).pop();
+                       AppDialog.showError(context, error: error);
+                     });
+                    }
                   },
                   child: Text(
                     'Login',
@@ -100,4 +116,42 @@ class _LoginScreenState extends State<LoginScreen> {
               Navigator.of(context).pushNamed(RegisterScreen.routeName);
             }));
   }
+  Future<void>login({required String email,required String password})async {
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email,
+          password: password
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+  }
+  /*
+  Future<void>login({required String email,required String password})async{
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+      );
+    }  catch (e) {
+      log('Error From FirebaseAuthException' as num );
+      throw "Error From FirebaseAuthException";
+
+    }
+  }
+
+   */
+
 }
+
+
+
+/*
+Assertion failed: org-dartlang-sdk:///lib/_engine/engine/window.dart:102:12
+!isDisposed
+"Trying to render a disposed EngineFlutterView."
+ */

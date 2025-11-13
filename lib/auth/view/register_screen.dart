@@ -1,6 +1,9 @@
+
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tasky_app/auth/widgets/text_form_field.dart';
+import 'package:tasky_app/utiles/app_dialog.dart';
 import 'package:tasky_app/utiles/validator.dart';
 import '../widgets/navigator_type_auth.dart';
 
@@ -96,7 +99,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   TextFormFieldWidget(
                     controller: ConfirmPassword,
                     hintText: " password",
-                    validator: Validator.validatePassword,
+                    validator: (text){
+                      return Validator.validateConfirmPassword(text, password.text);
+                    },
                   ),
                   SizedBox(height: 100),
                   MaterialButton(
@@ -107,9 +112,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     onPressed: () async{
-                      await register(email: email.text,
-                          password: password.text).then((value)=>print('Added User')).catchError((error)
-                      =>print(error));
+                      if(fromKey.currentState!.validate()){
+                        AppDialog.showLoading(context);
+                        await register(email: email.text,
+                            password: password.text).then(
+                                (value){
+                              Navigator.of(context).pop();
+                              Username.clear();
+                              email.clear();
+                              password.clear();
+                              ConfirmPassword.clear();
+                              Navigator.of(context).pop();
+                            }).catchError((error) {
+                          Navigator.of(context).pop();
+                          AppDialog.showError(context, error: error);
+                        });
+                      }
                     },
                     child: Text(
                       'Register',
@@ -121,7 +139,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   SizedBox(height: 14),
-
                 ]),
           )),
       floatingActionButton: NavigatorTypeAuthWidget(
@@ -149,3 +166,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 }
+
+
+
+
+
+
+
+
