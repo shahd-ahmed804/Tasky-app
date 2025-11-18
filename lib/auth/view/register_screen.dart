@@ -1,11 +1,11 @@
 
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tasky_app/auth/widgets/navigator_type_auth.dart';
 import 'package:tasky_app/auth/widgets/text_form_field.dart';
 import 'package:tasky_app/utiles/app_dialog.dart';
-import 'package:tasky_app/utiles/validator.dart';
-import '../widgets/navigator_type_auth.dart';
+import '../../utiles/validator.dart';
+
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -18,8 +18,8 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   var email = TextEditingController();
   var password = TextEditingController();
-  var ConfirmPassword = TextEditingController();
-  var Username = TextEditingController();
+  var confirmPassword = TextEditingController();
+  var username = TextEditingController();
   var fromKey = GlobalKey<FormState>();
 
   @override
@@ -52,9 +52,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   TextFormFieldWidget(
-                    controller: Username,
+                    controller: username,
                     hintText: " enter user name",
-                    validator: Validator.validateName,
+                     validator: Validator.validateName,
+                   // validator: Validator.validateName,
                   ),
                   SizedBox(height: 12),
                   Text(
@@ -85,6 +86,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     controller: password,
                     hintText: "Strong password",
                     validator: Validator.validatePassword,
+
                   ),
                   SizedBox(height: 12),
                   Text(
@@ -97,11 +99,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   SizedBox(height: 5),
                   TextFormFieldWidget(
-                    controller: ConfirmPassword,
+                    controller: confirmPassword,
                     hintText: " password",
-                    validator: (text){
+                  validator: (text){
                       return Validator.validateConfirmPassword(text, password.text);
-                    },
+                  },
                   ),
                   SizedBox(height: 100),
                   MaterialButton(
@@ -112,22 +114,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     onPressed: () async{
+
                       if(fromKey.currentState!.validate()){
                         AppDialog.showLoading(context);
                         await register(email: email.text,
                             password: password.text).then(
                                 (value){
                               Navigator.of(context).pop();
-                              Username.clear();
+                              username.clear();
                               email.clear();
                               password.clear();
-                              ConfirmPassword.clear();
+                              confirmPassword.clear();
                               Navigator.of(context).pop();
                             }).catchError((error) {
                           Navigator.of(context).pop();
                           AppDialog.showError(context, error: error);
                         });
                       }
+
                     },
                     child: Text(
                       'Register',
@@ -149,6 +153,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           }),
     );
   }
+
  Future<void> register({required String email,required String password})async{
     try {
       final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -165,7 +170,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
       print(e);
     }
   }
+
+
 }
+
 
 
 

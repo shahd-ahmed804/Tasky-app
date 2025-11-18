@@ -49,7 +49,6 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
             ? IconButton(
           icon: Icon(
             widget.obscureText ? Icons.visibility_off : Icons.visibility,
-           // widget.obscureText ? Icons.visibility_off : Icons.visibility,
             color: const Color(0xff454A4F),
             size: 24,
           ),
@@ -101,50 +100,3 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
   }
 }
 
-
-/*
-import 'package:flutter/material.dart';
-
-class TextFormFieldWidget extends StatelessWidget {
-  const TextFormFieldWidget({super.key,required this.controller,
-    required this.hintText, required this.pathImage});
-  final TextEditingController controller;
-  final String hintText;
-  final String pathImage;
-
-  @override
-  Widget build(BuildContext context) {
-    return  TextFormField(
-      controller: controller,
-      textInputAction: TextInputAction.done,
-      decoration: InputDecoration(
-        hintText: hintText,
-        fillColor: Color(0xffF3F3F3),
-        filled: true,
-        hintStyle: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w400,
-          color: Color(0xff808080),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Color(0xff5F33E1)),
-
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color:Colors.transparent),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Color(0xff5F33E1)),
-
-        ),
-        suffixIcon: Image.asset(pathImage),
-
-      ),
-    );
-  }
-}
-
- */

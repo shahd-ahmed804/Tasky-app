@@ -1,13 +1,17 @@
-import 'dart:math';
 
-import 'package:firebase_auth/firebase_auth.dart';
+
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tasky_app/auth/view/register_screen.dart';
-import 'package:tasky_app/auth/widgets/navigator_type_auth.dart';
 import 'package:tasky_app/auth/widgets/text_form_field.dart';
-import 'package:tasky_app/utiles/app_dialog.dart';
-import 'package:tasky_app/utiles/validator.dart';
+
+import '../../utiles/app_dialog.dart';
+import '../../utiles/validator.dart';
+import '../widgets/navigator_type_auth.dart';
+
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -94,6 +98,8 @@ class _LoginScreenState extends State<LoginScreen> {
                        AppDialog.showError(context, error: error);
                      });
                     }
+
+
                   },
                   child: Text(
                     'Login',
@@ -116,6 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Navigator.of(context).pushNamed(RegisterScreen.routeName);
             }));
   }
+/*
   Future<void>login({required String email,required String password})async {
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -130,7 +137,9 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
   }
-  /*
+
+ */
+
   Future<void>login({required String email,required String password})async{
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -138,20 +147,12 @@ class _LoginScreenState extends State<LoginScreen> {
           password: password,
       );
     }  catch (e) {
-      log('Error From FirebaseAuthException' as num );
+      log('Error From FirebaseAuthException');
       throw "Error From FirebaseAuthException";
 
     }
   }
-
-   */
-
 }
 
 
 
-/*
-Assertion failed: org-dartlang-sdk:///lib/_engine/engine/window.dart:102:12
-!isDisposed
-"Trying to render a disposed EngineFlutterView."
- */

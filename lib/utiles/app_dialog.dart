@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 abstract class AppDialog{
@@ -30,7 +31,7 @@ abstract class AppDialog{
       builder: (context)=>PopScope(
         canPop: true,
         child: AlertDialog(
-         title: Text("Error"),
+          title: Text("Error"),
           content:Text("Error"),
           actions: [
             MaterialButton(onPressed: (){
@@ -42,3 +43,4 @@ abstract class AppDialog{
     );
   }
 }
+
