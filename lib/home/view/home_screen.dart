@@ -61,7 +61,6 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Icon(Icons.add, color: Color(0xff5F33E1)),),
     );
   }
-
   void _onPressedAddTask(){
    showModalBottomSheet(context: context,
        builder: (context)=>ShowBottomSheetTask());

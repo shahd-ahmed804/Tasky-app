@@ -7,5 +7,4 @@ abstract class AssetsConstant{
   static String  Timer ="assets/images/timer.png";
   static String  Flag ="assets/images/flag.png";
   static String  homepage ="assets/images/homepage.png";
-
 }

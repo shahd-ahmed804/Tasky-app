@@ -49,7 +49,6 @@ class _ShowBottomSheetTaskState extends State<ShowBottomSheetTask> {
               _iconInkWell(imagePath: AssetsConstant.Flag, onPressed: (){}),
               const Spacer(),
               _iconInkWell(imagePath: AssetsConstant.Send, onPressed: (){}),
-
             ],
           ),
           SizedBox(width: 20),
