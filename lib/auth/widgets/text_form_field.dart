@@ -59,7 +59,6 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
           },
         )
             : null,
-
         contentPadding: const EdgeInsets.all(15),
         enabledBorder: outlineInputBorder(
           color: Color(0xffBABABA),

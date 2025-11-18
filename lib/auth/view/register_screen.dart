@@ -1,10 +1,13 @@
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tasky_app/auth/data/firebase/firebase_database_user.dart';
+import 'package:tasky_app/auth/data/model/user_model.dart';
+import 'package:tasky_app/core/network/result_firebase.dart';
+import 'package:tasky_app/core/utiles/app_dialog.dart';
+import 'package:tasky_app/core/utiles/validator.dart';
 import 'package:tasky_app/auth/widgets/navigator_type_auth.dart';
 import 'package:tasky_app/auth/widgets/text_form_field.dart';
-import 'package:tasky_app/utiles/app_dialog.dart';
-import '../../utiles/validator.dart';
+
 
 
 class RegisterScreen extends StatefulWidget {
@@ -101,7 +104,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   TextFormFieldWidget(
                     controller: confirmPassword,
                     hintText: " password",
-                  validator: (text){
+                    validator: (text){
                       return Validator.validateConfirmPassword(text, password.text);
                   },
                   ),
@@ -116,22 +119,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onPressed: () async{
 
                       if(fromKey.currentState!.validate()){
-                        AppDialog.showLoading(context);
-                        await register(email: email.text,
-                            password: password.text).then(
-                                (value){
-                              Navigator.of(context).pop();
-                              username.clear();
-                              email.clear();
-                              password.clear();
-                              confirmPassword.clear();
-                              Navigator.of(context).pop();
-                            }).catchError((error) {
-                          Navigator.of(context).pop();
-                          AppDialog.showError(context, error: error);
-                        });
-                      }
+                       await register();
 
+                      }
                     },
                     child: Text(
                       'Register',
@@ -154,21 +144,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
- Future<void> register({required String email,required String password})async{
-    try {
-      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
-    }
+
+ Future<void> register()async{
+   AppDialog.showLoading(context);
+     final result= await FBAUser.registerUser(UserModel
+                          (email:email.text,password: password.text,
+                        name: username.text));
+                      switch(result) {
+                        case SuccessFB<UserModel>():
+                            Navigator.of(context).pop();
+                            username.clear();
+                        email.clear();
+                        password.clear();
+                        confirmPassword.clear();
+                        Navigator.of(context).pop();
+                        case ErrorFB<UserModel>():
+                          Navigator.of(context).pop();
+                          AppDialog.showError(context, error: result.messageError);
+                      }
   }
 
 

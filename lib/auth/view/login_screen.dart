@@ -1,17 +1,12 @@
-
-
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tasky_app/auth/data/firebase/firebase_database_user.dart';
 import 'package:tasky_app/auth/view/register_screen.dart';
+import 'package:tasky_app/core/utiles/validator.dart';
 import 'package:tasky_app/auth/widgets/text_form_field.dart';
-
-import '../../utiles/app_dialog.dart';
-import '../../utiles/validator.dart';
+import '../../core/network/result_firebase.dart';
+import '../../core/utiles/app_dialog.dart';
 import '../widgets/navigator_type_auth.dart';
-
-
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -85,22 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  onPressed: ()async {
-                    if (fromKey.currentState!.validate()) {
-                      AppDialog.showLoading(context);
-                     await login(email: email.text,
-                       password: password.text).then((_){
-                        Navigator.of(context).pop();
-                        email.clear();
-                        password.clear();
-                     }).catchError((error){
-                       Navigator.of(context).pop();
-                       AppDialog.showError(context, error: error);
-                     });
-                    }
-
-
-                  },
+                  onPressed: onPressedLogin,
                   child: Text(
                     'Login',
                     style: TextStyle(
@@ -122,37 +102,22 @@ class _LoginScreenState extends State<LoginScreen> {
               Navigator.of(context).pushNamed(RegisterScreen.routeName);
             }));
   }
-/*
-  Future<void>login({required String email,required String password})async {
-    try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email,
-          password: password
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+
+  //Future<void>login()async{}
+  void onPressedLogin() async {
+    if (fromKey.currentState!.validate()) {
+      AppDialog.showLoading(context);
+      final result =
+          await FBAUser.loginUser(email: email.text, password: password.text);
+      switch (result) {
+        case SuccessFB<UserCredential>():
+          Navigator.of(context).pop();
+          email.clear();
+          password.clear();
+        case ErrorFB<UserCredential>():
+          Navigator.of(context).pop();
+          AppDialog.showError(context, error: result.messageError);
       }
     }
   }
-
- */
-
-  Future<void>login({required String email,required String password})async{
-    try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email,
-          password: password,
-      );
-    }  catch (e) {
-      log('Error From FirebaseAuthException');
-      throw "Error From FirebaseAuthException";
-
-    }
-  }
 }
-
-
-
