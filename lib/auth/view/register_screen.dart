@@ -89,6 +89,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     controller: password,
                     hintText: "Strong password",
                     validator: Validator.validatePassword,
+                    isPassword: true,
+                    obscureText: true,
 
                   ),
                   SizedBox(height: 12),
@@ -104,6 +106,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   TextFormFieldWidget(
                     controller: confirmPassword,
                     hintText: " password",
+                    isPassword: true,
+                    obscureText: true,
                     validator: (text){
                       return Validator.validateConfirmPassword(text, password.text);
                   },

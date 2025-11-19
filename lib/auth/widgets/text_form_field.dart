@@ -36,7 +36,6 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
         overflow: TextOverflow.ellipsis,
       ),
       obscureText: widget.obscureText,
-
       decoration: InputDecoration(
         hintText: widget.hintText,
         hintStyle: TextStyle(
