@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:tasky_app/auth/view/login_screen.dart';
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: HomeScreen.routeName,
+        initialRoute: FirebaseAuth.instance.currentUser?.uid == null
+        ?SplashScreen.routeName:HomeScreen.routeName,
         routes:{
           LoginScreen.routeName : (context)=> LoginScreen(),
           RegisterScreen.routeName : (context)=> RegisterScreen(),

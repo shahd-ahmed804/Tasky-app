@@ -1,5 +1,6 @@
+
 class TaskModel{
-  static const String collectionName = 'tasks';
+  static const String collectionName = "tasks";
  String? id;
  String? title;
  String? description;
@@ -15,11 +16,12 @@ class TaskModel{
    this.isCompleted=false,
 });
  Map<String,dynamic> toJson(){
+   final normalDate = DateTime(date!.year,date!.month,date!.day);
    return {
      'id':id,
      'title':title,
      'description':description,
-     'date':date?.millisecondsSinceEpoch,
+     'date':normalDate.millisecondsSinceEpoch,
      'priority':priority,
      'isCompleted':isCompleted,
    };
@@ -35,6 +37,5 @@ class TaskModel{
    );
  }
 }
-
 
 
